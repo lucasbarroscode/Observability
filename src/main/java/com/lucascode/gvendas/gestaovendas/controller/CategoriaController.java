@@ -1,7 +1,6 @@
 package com.lucascode.gvendas.gestaovendas.controller;
 
 import com.lucascode.gvendas.gestaovendas.entidade.Categoria;
-import com.lucascode.gvendas.gestaovendas.repository.CategoriaRepository;
 import com.lucascode.gvendas.gestaovendas.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,7 @@ public class CategoriaController {
 
     @GetMapping("/{codigo}")
     public ResponseEntity<Optional<Categoria>> buscarPorId (@PathVariable Long codigo){
-        Optional<Categoria> categoria = service.buscarPorId(codigo);
+        Optional<Categoria> categoria = service.buscarPorCodigo(codigo);
         return categoria.isPresent() ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
     }
 
@@ -35,6 +34,11 @@ public class CategoriaController {
         Categoria categoriaSalvar = service.salvar(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalvar);
 
+    }
+
+    @PutMapping("/{codigo}")
+    public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @RequestBody Categoria categoria){
+        return ResponseEntity.ok(service.atualizar(codigo, categoria));
     }
 
 }
