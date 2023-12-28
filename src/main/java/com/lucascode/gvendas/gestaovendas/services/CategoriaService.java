@@ -21,4 +21,8 @@ public class CategoriaService {
         return repository.findById(codigo);
     }
 
+    public Categoria salvar(Categoria categoria) {
+        return repository.save(categoria);
+    }
+
 }
