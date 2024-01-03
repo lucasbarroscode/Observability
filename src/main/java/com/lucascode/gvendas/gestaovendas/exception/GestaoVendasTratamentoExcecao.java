@@ -34,6 +34,14 @@ public class GestaoVendasTratamentoExcecao extends ResponseEntityExceptionHandle
         return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request){
+        String msgUsuario = "Recurso não encontrado.";
+        String msgDesenvolvedor = ex.toString();
+        List<Error> erros = Arrays.asList(new Error(msgUsuario, msgDesenvolvedor));
+        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
     private List<Error> gerarListaDeErros(BindingResult bindingResult) {
         List<Error> erros = new ArrayList<Error>();
         bindingResult.getFieldErrors().forEach(fieldError -> {
