@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @EnableJpaRepositories(basePackages = {"com.lucascode.gvendas.gestaovendas.repository"})
 
 //especifica a onde esta o pacote dos beans, controller e services
-@ComponentScan(basePackages = {"com.gvendas.gestaovendas.servico", "com.gvendas.gestaovendas.controlador", "com.gvendas.gestaovendas.excecao"})
+@ComponentScan(basePackages = {"com.lucascode.gvendas.gestaovendas.services", "com.lucascode.gvendas.gestaovendas.controller", "com.lucascode.gvendas.gestaovendas.exception"})
 @SpringBootApplication
 public class GestaoVendasApplication {
 

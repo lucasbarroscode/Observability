@@ -1,12 +1,18 @@
 
 package com.lucascode.gvendas.gestaovendas.entidade;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "categoria" )

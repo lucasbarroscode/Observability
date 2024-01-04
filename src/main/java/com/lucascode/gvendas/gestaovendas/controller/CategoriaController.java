@@ -2,7 +2,7 @@ package com.lucascode.gvendas.gestaovendas.controller;
 
 import com.lucascode.gvendas.gestaovendas.entidade.Categoria;
 import com.lucascode.gvendas.gestaovendas.services.CategoriaService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +21,7 @@ public class CategoriaController {
 
     @GetMapping
     public List<Categoria> listarTodas(){
+
         return service.listarTodas();
     }
 
