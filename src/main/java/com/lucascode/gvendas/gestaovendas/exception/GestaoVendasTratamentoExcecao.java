@@ -50,13 +50,13 @@ public class GestaoVendasTratamentoExcecao extends ResponseEntityExceptionHandle
 //        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 //    }
 
-//    @ExceptionHandler(RegraNegocioException.class)
-//    public ResponseEntity<Object> handleRegraNegocioException(RegraNegocioException ex, WebRequest request){
-//        String msgUsuario = ex.getMessage();
-//        String msgDesenvolvedor = ex.getMessage();
-//        List<Erro> erros = Arrays.asList(new Erro(msgUsuario, msgDesenvolvedor));
-//        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-//    }
+    @ExceptionHandler(RegraNegocioException.class)
+    public ResponseEntity<Object> handleRegraNegocioException(RegraNegocioException ex, WebRequest request){
+        String msgUsuario = ex.getMessage();
+        String msgDesenvolvedor = ex.getMessage();
+        List<Error> erros = Arrays.asList(new Error(msgUsuario, msgDesenvolvedor));
+        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 
     private List<Error> gerarListaDeErros(BindingResult bindingResult) {
         List<Error> erros = new ArrayList<Error>();
