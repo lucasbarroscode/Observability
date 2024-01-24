@@ -19,7 +19,12 @@ public class ProdutoService {
         return produtoRepository.findByCategoriaCodigo(codigoCategoria);
     }
 
-    public Optional<Produto> buscarPorCodigo(Long codigo, Long codigoCategoria) {
-        return produtoRepository.buscarPorCodigo(codigo, codigoCategoria);
+    public Optional<Produto> buscarPorCodigo(Long codigoProduto, Long codigoCategoria) {
+        return produtoRepository.buscarPorCodigo(codigoProduto, codigoCategoria);
     }
+
+    public Produto salvar (Produto produto){
+        return produtoRepository.save(produto);
+    }
+
 }
