@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+
 @ControllerAdvice
 public class GestaoVendasTratamentoExcecao extends ResponseEntityExceptionHandler {
 
@@ -42,13 +43,13 @@ public class GestaoVendasTratamentoExcecao extends ResponseEntityExceptionHandle
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-//    @ExceptionHandler(DataIntegrityViolationException.class)
-//    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request){
-//        String msgUsuario = "Recurso não encontrado.";
-//        String msgDesenvolvedor = ex.toString();
-//        List<Error> erros = Arrays.asList(new Error(msgUsuario, msgDesenvolvedor));
-//        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-//    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request){
+        String msgUsuario = "Recurso não encontrado.";
+        String msgDesenvolvedor = ex.toString();
+        List<Error> erros = Arrays.asList(new Error(msgUsuario, msgDesenvolvedor));
+        return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 
     @ExceptionHandler(RegraNegocioException.class)
     public ResponseEntity<Object> handleRegraNegocioException(RegraNegocioException ex, WebRequest request){
