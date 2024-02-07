@@ -43,7 +43,13 @@ public class ProdutoService {
         return produtoRepository.save(produtoAtualizar);
     }
 
-    private Produto validarProdutoExiste(Long codigoCategoria, Long codigoProduto) {
+    public void deletar(Long codigoCategoria, Long codigoProduto){
+        Produto produto = validarProdutoExiste(codigoProduto, codigoCategoria);
+        produtoRepository.delete(produto);
+
+    }
+
+    private Produto validarProdutoExiste(Long codigoProduto, Long codigoCategoria) {
         Optional<Produto> produto = buscarPorCodigo(codigoProduto, codigoCategoria);
         if(produto.isEmpty()) {
             throw new EmptyResultDataAccessException(1);
