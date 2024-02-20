@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "categoria" )
+@Table(name = "categoria")
 public class Categoria {
 
     @Id
@@ -23,9 +23,19 @@ public class Categoria {
     @Column(name = "codigo")
     private Long codigo;
     @Column(name = "nome")
-    @NotBlank(message = "Nome")
-    @Length(min = 3, max = 50, message = "Nome")
     private String nome;
+
+    public Categoria() {
+    }
+
+    public Categoria(String nome) {
+        this.nome = nome;
+    }
+
+    public Categoria(Long codigo, String nome) {
+        this.codigo = codigo;
+        this.nome = nome;
+    }
 
     public Long getCodigo() {
         return codigo;
@@ -56,6 +66,6 @@ public class Categoria {
 
     @Override
     public int hashCode() {
-       return Objects.hash(codigo,nome);
+        return Objects.hash(codigo, nome);
     }
 }
