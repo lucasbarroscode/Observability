@@ -1,4 +1,4 @@
-package com.lucascode.gvendas.gestaovendas.dto;
+package com.lucascode.gvendas.gestaovendas.dto.categoria;
 
 import com.lucascode.gvendas.gestaovendas.entidade.Categoria;
 import io.swagger.annotations.ApiModel;

@@ -1,7 +1,7 @@
 package com.lucascode.gvendas.gestaovendas.controller;
 
-import com.lucascode.gvendas.gestaovendas.dto.CategoriaRequestDTO;
-import com.lucascode.gvendas.gestaovendas.dto.CategoriaResponseDTO;
+import com.lucascode.gvendas.gestaovendas.dto.categoria.CategoriaRequestDTO;
+import com.lucascode.gvendas.gestaovendas.dto.categoria.CategoriaResponseDTO;
 import com.lucascode.gvendas.gestaovendas.entidade.Categoria;
 import com.lucascode.gvendas.gestaovendas.services.CategoriaService;
 import javax.validation.Valid;
