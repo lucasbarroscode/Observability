@@ -44,7 +44,7 @@ public class ProdutoService {
     }
 
     public void deletar(Long codigoCategoria, Long codigoProduto){
-        Produto produto = validarProdutoExiste(codigoProduto, codigoCategoria);
+        Produto produto = validarProdutoExiste( codigoCategoria, codigoProduto);
         produtoRepository.delete(produto);
 
     }

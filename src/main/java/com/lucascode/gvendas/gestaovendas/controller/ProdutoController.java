@@ -1,6 +1,7 @@
 package com.lucascode.gvendas.gestaovendas.controller;
 
 
+import com.lucascode.gvendas.gestaovendas.dto.produto.ProdutoRequestDTO;
 import com.lucascode.gvendas.gestaovendas.dto.produto.ProdutoResponseDTO;
 import com.lucascode.gvendas.gestaovendas.entidade.Produto;
 import com.lucascode.gvendas.gestaovendas.services.ProdutoService;
@@ -42,14 +43,16 @@ public class ProdutoController {
 
     @ApiOperation(value = "Salvar", nickname = "salvarProduto")
     @PostMapping
-    public ResponseEntity<Produto> salvar(@PathVariable Long codigoCategoria, @Valid @RequestBody Produto produto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.salvar(codigoCategoria, produto));
+    public ResponseEntity<ProdutoResponseDTO> salvar(@PathVariable Long codigoCategoria, @Valid @RequestBody ProdutoRequestDTO produto) {
+        Produto produtoSalvo = produtoService.salvar(codigoCategoria, produto.converterParaEntidade(codigoCategoria));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ProdutoResponseDTO.converterParaProdutoDTO(produtoSalvo));
     }
 
     @ApiOperation(value = "Atualizar", nickname = "atualizarProduto")
     @PutMapping("/{codigoProduto}")
-    public ResponseEntity<Produto> atualizar(@PathVariable Long codigoCategoria, @PathVariable Long codigoProduto, @Valid @RequestBody Produto produto) {
-        return ResponseEntity.ok(produtoService.atualizar(codigoCategoria, codigoProduto, produto));
+    public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Long codigoCategoria, @PathVariable Long codigoProduto, @Valid @RequestBody ProdutoRequestDTO produto) {
+        Produto produtoAtualizar = produtoService.atualizar(codigoCategoria, codigoProduto, produto.converterParaEntidade(codigoCategoria, codigoProduto));
+        return ResponseEntity.ok(ProdutoResponseDTO.converterParaProdutoDTO(produtoAtualizar));
     }
 
     @ApiOperation(value = "Deletar", nickname = "deletarProduto")
