@@ -50,6 +50,7 @@ public class ProdutoController {
 
     @ApiOperation(value = "Atualizar", nickname = "atualizarProduto")
     @PutMapping("/{codigoProduto}")
+    //todo arrumar aqui
     public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Long codigoCategoria, @PathVariable Long codigoProduto, @Valid @RequestBody ProdutoRequestDTO produto) {
         Produto produtoAtualizar = produtoService.atualizar(codigoCategoria, codigoProduto, produto.converterParaEntidade(codigoCategoria, codigoProduto));
         return ResponseEntity.ok(ProdutoResponseDTO.converterParaProdutoDTO(produtoAtualizar));

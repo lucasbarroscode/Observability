@@ -36,15 +36,15 @@ public class ProdutoService {
     }
 
     public Produto atualizar(Long codigoCategoria, Long codigoProduto, Produto produto){
-        Produto produtoAtualizar = validarProdutoExiste(codigoCategoria, codigoProduto);
-        validarProdutoDuplicado(produto);
+        Produto produtoAtualizar = validarProdutoExiste(codigoProduto, codigoCategoria);
         validarCategoriaDoProdutoExiste(codigoCategoria);
+        validarProdutoDuplicado(produto);
         BeanUtils.copyProperties(produto, produtoAtualizar, "codigo");
         return produtoRepository.save(produtoAtualizar);
     }
 
     public void deletar(Long codigoCategoria, Long codigoProduto){
-        Produto produto = validarProdutoExiste( codigoCategoria, codigoProduto);
+        Produto produto = validarProdutoExiste(codigoProduto, codigoCategoria);
         produtoRepository.delete(produto);
 
     }
