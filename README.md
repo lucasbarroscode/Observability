@@ -11,3 +11,6 @@ Feito para estudar conceitos de observabilidade.
 http://localhost:8080/swagger-ui.html
 ## OpenTracing Jaeger
 http://localhost:16686/search
+## Actuator Health
+http://localhost:8080/actuator/health/
+http://localhost:8080/actuator/
