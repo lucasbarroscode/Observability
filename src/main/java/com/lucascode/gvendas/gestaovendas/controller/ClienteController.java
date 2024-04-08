@@ -2,6 +2,7 @@ package com.lucascode.gvendas.gestaovendas.controller;
 
 import com.lucascode.gvendas.gestaovendas.dto.categoria.CategoriaRequestDTO;
 import com.lucascode.gvendas.gestaovendas.dto.categoria.CategoriaResponseDTO;
+import com.lucascode.gvendas.gestaovendas.dto.cliente.ClienteRequestDTO;
 import com.lucascode.gvendas.gestaovendas.dto.cliente.ClienteResponseDTO;
 import com.lucascode.gvendas.gestaovendas.entidade.Categoria;
 import com.lucascode.gvendas.gestaovendas.entidade.Cliente;
@@ -43,8 +44,8 @@ public class ClienteController {
 
     @ApiOperation(value = "Salvar", nickname = "salvarCliente")
     @PostMapping
-    public ResponseEntity<ClienteResponseDTO> salvar(@Valid @RequestBody Cliente cliente){
-        Cliente clienteSalvo = service.salvar(cliente);
+    public ResponseEntity<ClienteResponseDTO> salvar(@Valid @RequestBody ClienteRequestDTO clienteDTO){
+        Cliente clienteSalvo = service.salvar(clienteDTO.converterParaEntidade());
         return ResponseEntity.status(HttpStatus.CREATED).body(ClienteResponseDTO.converterParaClienteDTO(clienteSalvo));
     }
 
