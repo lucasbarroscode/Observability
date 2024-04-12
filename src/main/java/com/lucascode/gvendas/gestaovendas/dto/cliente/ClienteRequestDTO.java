@@ -5,19 +5,30 @@ import com.lucascode.gvendas.gestaovendas.entidade.Endereco;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 @ApiModel("Cliente request dto")
 public class ClienteRequestDTO {
 
     @ApiModelProperty(value = "Nome")
+    @NotBlank(message = "Nome")
     private String nome;
 
     @ApiModelProperty(value = "Telefone")
+    @NotBlank(message = "Telefone")
+    @Pattern(regexp = "\\([\\d]{2}\\)[\\d]{5}[- .][\\d]{4}", message = "Telefone")
     private String telefone;
 
     @ApiModelProperty(value = "Ativo")
+    @NotNull(message = "Ativo")
     private Boolean ativo;
 
     @ApiModelProperty(value = "Endereço")
+    @NotNull(message = "Endereco")
+    @Valid
     private EnderecoRequestDTO enderecoDto;
 
     public Cliente converterParaEntidade() {

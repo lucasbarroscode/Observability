@@ -31,7 +31,7 @@ public class EnderecoRequestDTO {
 
     @ApiModelProperty(value = "Cep")
     @NotBlank(message = "Cep")
-    //@Pattern(regexp = "[\\d]{5}-[\\d]{3}", message = "Cep")
+    @Pattern(regexp = "[\\d]{5}-[\\d]{3}", message = "Cep")
     private String cep;
 
     @ApiModelProperty(value = "Cidade")
