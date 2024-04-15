@@ -33,6 +33,7 @@ public class ClienteService {
         return repository.save(cliente);
     }
 
+    //todo corrigir atualizar cliente
     public Cliente atualizar(Long codigo, Cliente cliente){
         Cliente clienteAtualizar = validarClienteExiste(codigo);
         validarClienteDuplicado(cliente);
