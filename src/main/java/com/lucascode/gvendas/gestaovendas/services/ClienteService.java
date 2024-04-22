@@ -34,11 +34,15 @@ public class ClienteService {
     }
 
     //todo corrigir atualizar cliente
-    public Cliente atualizar(Long codigo, Cliente cliente){
+    public Cliente atualizar(Long codigo, Cliente cliente) {
         Cliente clienteAtualizar = validarClienteExiste(codigo);
         validarClienteDuplicado(cliente);
         BeanUtils.copyProperties(cliente, clienteAtualizar, "codigo");
         return repository.save(clienteAtualizar);
+    }
+
+    public void deletar(Long codigo){
+        repository.deleteById(codigo);
     }
 
     private Cliente validarClienteExiste(Long codigo){
