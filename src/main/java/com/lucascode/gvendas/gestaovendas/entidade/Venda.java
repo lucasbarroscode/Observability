@@ -20,6 +20,14 @@ public class Venda {
     @JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo")
     private Cliente cliente;
 
+    public Venda(LocalDate data, Cliente cliente) {
+        this.data = data;
+        this.cliente = cliente;
+    }
+
+    public Venda() {
+    }
+
     public Long getCodigo() {
         return codigo;
     }

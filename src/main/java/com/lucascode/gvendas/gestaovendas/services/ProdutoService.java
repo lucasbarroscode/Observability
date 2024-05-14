@@ -57,6 +57,14 @@ public class ProdutoService {
         return produto.get();
     }
 
+    protected Produto validarProdutoExiste(Long codigoProduto) {
+        Optional<Produto> produto = produtoRepository.findById(codigoProduto);
+        if(produto.isEmpty()) {
+            throw new RegraNegocioException(String.format("Produto de codigo %s nao encontrado", codigoProduto));
+        }
+        return produto.get();
+    }
+
     private void validarProdutoDuplicado(Produto produto){
         Optional<Produto> produtoPorDescricao = produtoRepository.findByCategoriaCodigoAndDescricao(produto.getCategoria().getCodigo(), produto.getDescricao());
         if(produtoPorDescricao.isPresent() && produtoPorDescricao.get().getCodigo() != produto.getCodigo()){
