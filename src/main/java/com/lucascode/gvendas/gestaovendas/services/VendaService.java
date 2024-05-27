@@ -1,6 +1,5 @@
 package com.lucascode.gvendas.gestaovendas.services;
 
-import com.lucascode.gvendas.gestaovendas.dto.cliente.ClienteResponseDTO;
 import com.lucascode.gvendas.gestaovendas.dto.venda.*;
 import com.lucascode.gvendas.gestaovendas.entidade.Cliente;
 import com.lucascode.gvendas.gestaovendas.entidade.ItemVenda;
@@ -36,7 +35,7 @@ public class VendaService extends AbstractVendaServico {
     public ClienteVendaResponseDTO listarVendaPorCliente(Long codigoCliente) {
         Cliente cliente = validarClienteVendaExiste(codigoCliente);
         List<VendaResponseDTO> vendaResponseDtoList = vendaRepository.findByClienteCodigo(codigoCliente).stream()
-                .map(venda -> criandoVendaResponseDTO(venda, itemVendaRepository.findByVendaCodigo(venda.getCodigo()))).collect(Collectors.toList());
+                .map(venda -> criandoVendaResponseDTO(venda, itemVendaRepository.findByVendaPorCodigo(venda.getCodigo()))).collect(Collectors.toList());
         return new ClienteVendaResponseDTO(cliente.getNome(), vendaResponseDtoList);
 
     }
@@ -44,7 +43,7 @@ public class VendaService extends AbstractVendaServico {
     //ClienteVendaResponseDTO aqui vai retornar uma lista de um elemento so
     public ClienteVendaResponseDTO listarVendaPorCodigo(Long codigoVenda) {
         Venda venda = validarVendaExiste(codigoVenda);
-        return new ClienteVendaResponseDTO(venda.getCliente().getNome(), Arrays.asList(criandoVendaResponseDTO(venda, itemVendaRepository.findByVendaCodigo(venda.getCodigo()))));
+        return new ClienteVendaResponseDTO(venda.getCliente().getNome(), Arrays.asList(criandoVendaResponseDTO(venda, itemVendaRepository.findByVendaPorCodigo(venda.getCodigo()))));
 
     }
 
@@ -53,7 +52,7 @@ public class VendaService extends AbstractVendaServico {
         validarProdutoExiste(vendaDto.getItensVendaDto());
         Venda vendaSalva = salvarVenda(cliente, vendaDto);
         return new ClienteVendaResponseDTO(vendaSalva.getCliente().getNome(),
-                Arrays.asList(criandoVendaResponseDTO(vendaSalva, itemVendaRepository.findByVendaCodigo(vendaSalva.getCodigo()))));
+                Arrays.asList(criandoVendaResponseDTO(vendaSalva, itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo()))));
 
     }
 
