@@ -43,7 +43,8 @@ public class VendaService extends AbstractVendaServico {
     //ClienteVendaResponseDTO aqui vai retornar uma lista de um elemento so
     public ClienteVendaResponseDTO listarVendaPorCodigo(Long codigoVenda) {
         Venda venda = validarVendaExiste(codigoVenda);
-        return new ClienteVendaResponseDTO(venda.getCliente().getNome(), Arrays.asList(criandoVendaResponseDTO(venda, itemVendaRepository.findByVendaPorCodigo(venda.getCodigo()))));
+        List<ItemVenda> itensVendaList = itemVendaRepository.findByVendaPorCodigo(venda.getCodigo());
+        return retornandoClienteVendaResponseDto(venda, itensVendaList);
 
     }
 
@@ -51,8 +52,7 @@ public class VendaService extends AbstractVendaServico {
         Cliente cliente = validarClienteVendaExiste(codigoCliente);
         validarProdutoExiste(vendaDto.getItensVendaDto());
         Venda vendaSalva = salvarVenda(cliente, vendaDto);
-        return new ClienteVendaResponseDTO(vendaSalva.getCliente().getNome(),
-                Arrays.asList(criandoVendaResponseDTO(vendaSalva, itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo()))));
+        return retornandoClienteVendaResponseDto(vendaSalva, itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo()));
 
     }
 
@@ -83,9 +83,4 @@ public class VendaService extends AbstractVendaServico {
         }
         return cliente.get();
     }
-
-    private ItemVenda criandoItemVenda(ItemVendaRequestDTO itemVendaDto, Venda venda) {
-        return new ItemVenda(itemVendaDto.getQuantidade(), itemVendaDto.getPrecoVendido(), new Produto(itemVendaDto.getCodigoProduto()), venda);
-    }
-
 }
