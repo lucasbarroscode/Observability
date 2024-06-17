@@ -11,7 +11,6 @@ import com.lucascode.gvendas.gestaovendas.repository.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,7 +49,7 @@ public class VendaService extends AbstractVendaServico {
 
     public ClienteVendaResponseDTO salvar(Long codigoCliente, VendaRequestDTO vendaDto) {
         Cliente cliente = validarClienteVendaExiste(codigoCliente);
-        validarProdutoExiste(vendaDto.getItensVendaDto());
+        validarProdutoExisteEAtualizarQuantidade(vendaDto.getItensVendaDto());
         Venda vendaSalva = salvarVenda(cliente, vendaDto);
         return retornandoClienteVendaResponseDto(vendaSalva, itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo()));
 
@@ -63,8 +62,20 @@ public class VendaService extends AbstractVendaServico {
         return vendaSalva;
     }
 
-    private void validarProdutoExiste(List<ItemVendaRequestDTO> itensVendaDto) {
-        itensVendaDto.forEach(item -> produtoService.validarProdutoExiste(item.getCodigoProduto()));
+    private void validarProdutoExisteEAtualizarQuantidade(List<ItemVendaRequestDTO> itensVendaDto) {
+        itensVendaDto.forEach(item -> {
+            Produto produto = produtoService.validarProdutoExiste(item.getCodigoProduto());
+            validarQuantidadeProdutoExiste(produto, item.getQuantidade());
+            produto.setQuantidade(produto.getQuantidade() - item.getQuantidade());
+            produtoService.atualizarQuantidadeAposVenda(produto);
+        });
+    }
+
+    private void validarQuantidadeProdutoExiste(Produto produto, Integer qtdeVendaDto){
+        if(!(produto.getQuantidade() >= qtdeVendaDto)){
+            throw new RegraNegocioException(String.format("A quantidade %s informada para o produto %s nao esta disponivel em estoque ",
+                    qtdeVendaDto, produto.getDescricao()));
+        }
     }
 
     private Venda validarVendaExiste(Long codigoVenda) {

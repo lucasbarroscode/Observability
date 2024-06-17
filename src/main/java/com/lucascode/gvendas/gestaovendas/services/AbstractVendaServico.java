@@ -12,7 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AbstractVendaServico {
+public abstract class
+AbstractVendaServico {
 
     protected ClienteVendaResponseDTO retornandoClienteVendaResponseDto(Venda venda, List<ItemVenda> itensVendaList){
         return new ClienteVendaResponseDTO(venda.getCliente().getNome(),
