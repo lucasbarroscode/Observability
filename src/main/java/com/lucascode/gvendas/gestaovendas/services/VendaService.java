@@ -10,6 +10,8 @@ import com.lucascode.gvendas.gestaovendas.repository.ItemVendaRepository;
 import com.lucascode.gvendas.gestaovendas.repository.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +49,7 @@ public class VendaService extends AbstractVendaServico {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public ClienteVendaResponseDTO salvar(Long codigoCliente, VendaRequestDTO vendaDto) {
         Cliente cliente = validarClienteVendaExiste(codigoCliente);
         validarProdutoExisteEAtualizarQuantidade(vendaDto.getItensVendaDto());
