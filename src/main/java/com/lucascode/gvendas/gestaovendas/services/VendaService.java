@@ -49,6 +49,8 @@ public class VendaService extends AbstractVendaServico {
 
     }
 
+    /*precisa colocar o transactional pq como estamos "atualizando" duas tabelas diferentes (itens e vendas)
+     para se der alguma execao der rollback nas operações de banco de dados feitas antes */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public ClienteVendaResponseDTO salvar(Long codigoCliente, VendaRequestDTO vendaDto) {
         Cliente cliente = validarClienteVendaExiste(codigoCliente);
@@ -56,6 +58,26 @@ public class VendaService extends AbstractVendaServico {
         Venda vendaSalva = salvarVenda(cliente, vendaDto);
         return retornandoClienteVendaResponseDto(vendaSalva, itemVendaRepository.findByVendaPorCodigo(vendaSalva.getCodigo()));
 
+    }
+
+    /*precisa colocar o transactional pq como estamos "atualizando" duas tabelas diferentes (itens e vendas)
+     para se der alguma execao der rollback nas operações de banco de dados feitas antes */
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
+    public void deletar(Long codigoVenda) {
+        Venda venda = validarVendaExiste(codigoVenda);
+        List<ItemVenda> itensVenda = itemVendaRepository.findByVendaPorCodigo(codigoVenda);
+        validarProdutoExisteEDevolverEstoque(itensVenda);
+        itemVendaRepository.deleteAll(itensVenda);
+        vendaRepository.deleteById(codigoVenda);
+
+    }
+
+    private void validarProdutoExisteEDevolverEstoque(List<ItemVenda> itensVenda){
+        itensVenda.forEach(item -> {
+            Produto produto = produtoService.validarProdutoExiste(item.getProduto().getCodigo());
+            produto.setQuantidade(produto.getQuantidade() + item.getQuantidade());
+            produtoService.atualizarQuantidadeEmEstoque(produto);
+        });
     }
 
     private Venda salvarVenda(Cliente cliente, VendaRequestDTO vendaDto) {
@@ -70,7 +92,7 @@ public class VendaService extends AbstractVendaServico {
             Produto produto = produtoService.validarProdutoExiste(item.getCodigoProduto());
             validarQuantidadeProdutoExiste(produto, item.getQuantidade());
             produto.setQuantidade(produto.getQuantidade() - item.getQuantidade());
-            produtoService.atualizarQuantidadeAposVenda(produto);
+            produtoService.atualizarQuantidadeEmEstoque(produto);
         });
     }
 

@@ -49,7 +49,7 @@ public class ProdutoService {
 
     }
 
-    protected void atualizarQuantidadeAposVenda(Produto produto){
+    protected void atualizarQuantidadeEmEstoque(Produto produto){
         produtoRepository.save(produto);
     }
 
