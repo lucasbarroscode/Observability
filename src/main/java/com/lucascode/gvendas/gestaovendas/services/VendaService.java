@@ -60,6 +60,17 @@ public class VendaService extends AbstractVendaServico {
 
     }
 
+    public ClienteVendaResponseDTO atualizar(Long codigoVenda, Long codigoCliente, VendaRequestDTO vendaDto){
+        validarVendaExiste(codigoVenda);
+        Cliente cliente = validarClienteVendaExiste(codigoCliente);
+        List<ItemVenda> itensVendaList = itemVendaRepository.findByVendaPorCodigo(codigoVenda);
+        validarProdutoExisteEDevolverEstoque(itensVendaList);
+        validarProdutoExisteEAtualizarQuantidade(vendaDto.getItensVendaDto());
+        itemVendaRepository.deleteAll(itensVendaList);
+        Venda vendaAtualizada = atualizarVenda(codigoVenda, cliente, vendaDto);
+        return retornandoClienteVendaResponseDto(vendaAtualizada, itemVendaRepository.findByVendaPorCodigo(vendaAtualizada.getCodigo()));
+    }
+
     /*precisa colocar o transactional pq como estamos "atualizando" duas tabelas diferentes (itens e vendas)
      para se der alguma execao der rollback nas operações de banco de dados feitas antes */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
@@ -69,7 +80,6 @@ public class VendaService extends AbstractVendaServico {
         validarProdutoExisteEDevolverEstoque(itensVenda);
         itemVendaRepository.deleteAll(itensVenda);
         vendaRepository.deleteById(codigoVenda);
-
     }
 
     private void validarProdutoExisteEDevolverEstoque(List<ItemVenda> itensVenda){
@@ -82,6 +92,13 @@ public class VendaService extends AbstractVendaServico {
 
     private Venda salvarVenda(Cliente cliente, VendaRequestDTO vendaDto) {
         Venda vendaSalva = vendaRepository.save(new Venda(vendaDto.getData(), cliente));
+        vendaDto.getItensVendaDto().stream().map(itemVendaDto -> criandoItemVenda(itemVendaDto, vendaSalva))
+                .forEach(itemVendaRepository::save);
+        return vendaSalva;
+    }
+
+    private Venda atualizarVenda(Long codigoVenda, Cliente cliente, VendaRequestDTO vendaDto) {
+        Venda vendaSalva = vendaRepository.save(new Venda(codigoVenda, vendaDto.getData(), cliente));
         vendaDto.getItensVendaDto().stream().map(itemVendaDto -> criandoItemVenda(itemVendaDto, vendaSalva))
                 .forEach(itemVendaRepository::save);
         return vendaSalva;

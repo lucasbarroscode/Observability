@@ -45,5 +45,11 @@ public class VendaController {
         vendaService.deletar(codigoVenda);
     }
 
+    @ApiOperation(value = "Atualizar Venda", nickname = "atualizarVenda")
+    @PutMapping("/{codigoVenda}/cliente/{codigoCliente}")
+    public ResponseEntity<ClienteVendaResponseDTO> atualizar(@PathVariable Long codigoVenda,@PathVariable Long codigoCliente, @Valid @RequestBody VendaRequestDTO vendaDto){
+        return ResponseEntity.ok(vendaService.atualizar(codigoVenda, codigoCliente, vendaDto));
+    }
+
 
 }
