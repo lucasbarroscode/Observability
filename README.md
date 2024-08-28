@@ -23,5 +23,15 @@ http://localhost:3000/?orgId=1
 user: admin
 password: admin
 
-##TODo 
+## Destaque de alguns conceitos utilizados no projeto
+
+@Transactional = Precisa colocar o transactional pq como estamos "atualizando" duas tabelas diferentes (itens e vendas)
+para se der alguma execao der rollback nas operações de banco de dados feitas antes 
+
+## TODO
 Corrigir atualizar clientes
+
+
+## Subindo a aplicação
+Caso não tenha subido a aplicação ainda executar o camando docker-compose up --build
+Caso fez alguma alteração e quer subir as novas alterações executar docker-compose down 
