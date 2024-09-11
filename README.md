@@ -29,9 +29,11 @@ password: admin
 para se der alguma execao der rollback nas operações de banco de dados feitas antes 
 
 ## TODO
-Corrigir atualizar clientes
+- Corrigir atualizar clientes
+- Inserir curl dos request aqui tbm
 
 
 ## Subindo a aplicação
+mvn clean install
 Caso não tenha subido a aplicação ainda executar o camando docker-compose up --build
 Caso fez alguma alteração e quer subir as novas alterações executar docker-compose down 
