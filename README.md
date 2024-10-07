@@ -29,7 +29,6 @@ password: admin
 para se der alguma execao der rollback nas operações de banco de dados feitas antes 
 
 ## TODO
-- Corrigir atualizar clientes
 - Inserir curl dos request aqui tbm
 
 
